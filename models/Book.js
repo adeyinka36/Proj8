@@ -1,5 +1,6 @@
+'use strict';
 const Sequelize = require('sequelize');
-const {sequelize} = require('../models');
+
 
 
 module.exports=(sequelize)=>{
@@ -16,7 +17,7 @@ Book.init({
     },
     genre:Sequelize.STRING,
     year:Sequelize.INTEGER
-},{sequelize})
+},{sequelize});
 
 return Book
 }

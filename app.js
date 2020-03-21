@@ -35,4 +35,5 @@ res.render ("pageNotFound")
 
 sequelize.sync().then(() => {
     app.listen(3000);
+    
   });
