@@ -44,11 +44,11 @@ router.get("/books/new",(req,res)=>{
 
 
 // route to update book with url
-router.get("/books/:id",wrapper(async(req,res)=>{
+router.get("/books/:id/delete",wrapper(async(req,res)=>{
 
     const book = await Book.findOne(req.params.id)
     book.destroy()
-      res.render('update-book')
+      res.render("index")
     
 }))
 
@@ -62,12 +62,11 @@ router.post("/books/new",wrapper(async(req,res)=>{
 }));
 
 router.post("/books/:id",(req,res)=>{
-    return res.render('update-book');
+    const newBook= await Book.findOne(req.params.id)
+    return res.render('update-book',{data:newBook});
 })
 
-router.post("/books/:id/delete",(req,res)=>{
-    res.send("index")
-})
+
 
 
 module.exports= router
