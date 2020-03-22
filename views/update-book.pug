@@ -2,13 +2,13 @@ extends layout.pug
 block content 
     body
         h1 Update Book
-        form
+        form(method='post', action="/books/"+data.id+"/update", onsubmit="return confirm('Are you happy with these change?');")
             p
                 label(for='title') Title
                 input#title(name='title', type='text', value= data.title)
             p
                 label(for='author') Author
-                input#author(name='author', type='text', value= data.name)
+                input#author(name='author', type='text', value= data.author)
             p
                 label(for='genre') Genre
                 input#genre(name='genre', type='text', value= data.genre)
@@ -17,7 +17,8 @@ block content
                 input#year(name='year', type='text', value= data.year)
             p
                 input(type='submit', value='Update Book')
-            form(method='post', action=`books/${data.id}/delete`, onsubmit="return confirm('Do you really want to delete this book?');")
+
+        form(method='post', action="/books/"+data.id+"/delete", onsubmit="return confirm('Do you really want to delete this book?');")    
             p
                 a.button(href='/') Cancel
             p

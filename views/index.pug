@@ -4,6 +4,8 @@ block content
         h1 Books
         p
             a.button(href='/books/new') Create New Book
+        form(action="/search" method="post")
+            input(name="search" type="text")
         table
             tr
                 th Title
@@ -17,4 +19,7 @@ block content
                     td= d.author
                     td= d.genre
                     td= d.year
-                    
+        form.formnew(action="/back",method="post")
+            button.newbutton.button(type="submit") Back
+        form.formnew(action="/next",method="post")
+            button.newbutton(type="submit") Next

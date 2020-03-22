@@ -95,3 +95,6 @@ input[type=text] {
 .error {
   color: rgb(236, 15, 15);
 }
+.newbutton{
+  width:100px;
+}
