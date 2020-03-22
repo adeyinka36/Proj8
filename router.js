@@ -41,7 +41,7 @@ router.post("/back",wrapper(async(req,res)=>{
     const values= await Book.findAll({limit:7});
     const data = values.map(v=>v.toJSON());
     console.log(data[0].title);
-    res.render("index",{data});
+   return  res.render("index",{data});
   }));
   
 // redirect to home 
@@ -52,15 +52,15 @@ router.get("/books",(req,res)=>{
 });
 
 // route to book update page
-router.get("/books/update",(req,res)=>{
-    res.render('update-book');
-});
+router.get("/books/update",wrapper(async(req,res)=>{
+    return res.render('update-book');
+}));
 
 // route to add new book
-router.get("/books/new",(req,res)=>{
+router.get("/books/new",wrapper(async(req,res)=>{
     
     return res.render('new-book');
-});
+}));
 
 
 // route to update book with url
@@ -84,14 +84,23 @@ router.get("/books/:id",wrapper(async(req,res)=>{
     return res.render('update-book',{data:newBook});
 }));
 
+// update error route
+router.get("/books/:id/error",wrapper(async(req,res)=>{
+    console.log(req.params.id);
+    const newBook= await Book.findByPk(req.params.id);
+    return res.render('update-error',{data:newBook});
+}));
 // update a specific book strait from url 
 router.post("/books/:id/update",wrapper(async(req,res)=>{
-
+    
+    if (req.body.title==""||req.body.author==""){
+        return res.redirect(`/books/${req.params.id}/error`)}
+    else{
     const bookToChange= await Book.findByPk(req.params.id);
 
      await bookToChange.update(req.body);
      res.redirect('/')
-}));
+}}));
 
 // delete a specific book from url
 router.post("/books/:id/delete",wrapper(async(req,res)=>{
@@ -119,6 +128,7 @@ router.post("/books/:id",wrapper(async(req,res)=>{
     return res.render('update-book',{data:newBook});
 }));
 
+router.post("")
 
 // search route
 router.post("/search",wrapper(async(req,res)=>{
@@ -140,8 +150,8 @@ router.post("/search",wrapper(async(req,res)=>{
 }));
 
 // route to 404 page 
-router.get("*",(req,res)=>{
+router.get("*",wrapper(async(req,res)=>{
     res.render("page-not-found")
-})
+}));
 
 module.exports= router
